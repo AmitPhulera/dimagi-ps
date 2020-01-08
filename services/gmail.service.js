@@ -1,8 +1,7 @@
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
-const gmail = google.gmail({version: 'v1'});
-
+const gmail = google.gmail({ version: "v1" });
 
 const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];
 
@@ -23,8 +22,8 @@ function prepareAuthObj() {
 }
 /**
  * from provided token path, reads the token and prepares the auth object
- * @param {Object} credentials 
- * 
+ * @param {Object} credentials
+ *
  */
 function getAuthObj(credentials) {
   try {
@@ -46,17 +45,31 @@ function getAuthObj(credentials) {
 }
 /**
  * Returns list of emails
- * @param {Object} auth 
- * @param {string} lastEvaluatedKey 
+ * @param {Object} auth
+ * @param {string} lastEvaluatedKey
  */
 async function listEmails(auth, lastEvaluatedKey) {
   return gmail.users.messages.list({
-      auth,
-      userId:'me'
+    auth,
+    userId: "me"
   });
-  
+}
+
+async function getDetailedMailInfo(auth, userId, id) {
+  let mailInfo = await gmail.users.messages.get({
+    auth,
+    userId,
+    id
+  });
+  const { headers } = mailInfo.data.payload;
+  // console.log(mailInfo)
+  const subject = headers.find(({ name }) => name === "Subject");
+  const from = headers.find(({ name }) => name === "From");
+  const date = headers.find(({ name }) => name === "Date");
+  return { location: subject.value, from: from.value, date: date.value, id };
 }
 module.exports = {
   prepareAuthObj,
   listEmails,
+  getDetailedMailInfo
 };

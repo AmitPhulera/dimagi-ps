@@ -1,8 +1,16 @@
-const gmail = require('./services/gmail.service');
-const {prepareAuthObj,listEmails} = gmail;
-const authObj = prepareAuthObj();
+const {prepareAuthObj,listEmails,getDetailedMailInfo} = require('./services/gmail.service');
+const {getLocationInfo} = require('./services/location.service');
+
+
 
 async function init(){
-    let list = await listEmails(authObj);
+    const authObj = prepareAuthObj();
+    const list = await listEmails(authObj);
+    const {messages} = list.data;
+    const details = await getDetailedMailInfo(authObj,"me",messages[0].id);
+    const {location,from,date,id} = details;
+    const locationInfo =await getLocationInfo(location); 
+    const packetToBeSaved = {...details,...locationInfo};  
+    
 };
 init();
