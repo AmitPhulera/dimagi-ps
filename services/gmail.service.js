@@ -55,8 +55,6 @@ async function listEmails(auth, lastEvaluatedKey) {
       userId:'me'
   });
   
-//   let mailList = await listEmails({ userId: "me",auth });
-//   return mailList;
 }
 module.exports = {
   prepareAuthObj,
