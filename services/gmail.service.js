@@ -61,5 +61,4 @@ async function listEmails(auth, lastEvaluatedKey) {
 module.exports = {
   prepareAuthObj,
   listEmails,
-  listLabels,
 };
