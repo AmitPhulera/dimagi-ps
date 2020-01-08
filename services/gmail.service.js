@@ -54,7 +54,12 @@ async function listEmails(auth, lastEvaluatedKey) {
     userId: "me"
   });
 }
-
+/**
+ * 
+ * @param {Object} auth 
+ * @param {string} userId 
+ * @param {string} id 
+ */
 async function getDetailedMailInfo(auth, userId, id) {
   let mailInfo = await gmail.users.messages.get({
     auth,
@@ -62,7 +67,6 @@ async function getDetailedMailInfo(auth, userId, id) {
     id
   });
   const { headers } = mailInfo.data.payload;
-  // console.log(mailInfo)
   const subject = headers.find(({ name }) => name === "Subject");
   const from = headers.find(({ name }) => name === "From");
   const date = headers.find(({ name }) => name === "Date");

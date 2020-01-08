@@ -5,8 +5,12 @@ You can generate it by following the procedure https://developers.google.com/gma
 
 
 ### Getting started
-- Once you obtain credentials.json and token.json, you can call app.js to list your email threads
+Once you obtain credentials.json and token.json and ensuring you have node installed in your system.
 
+
+```js
+npm i
+node index.js
+```
 ### ToDos
-- Extract from email
 - Things to save to db - time, sender, and freetext subject line
